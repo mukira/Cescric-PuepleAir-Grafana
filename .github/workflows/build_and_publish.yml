@@ -16,8 +16,8 @@ jobs:
         id: docker_meta
         with:
           images: |
-            nirajsanghvi/purpleair_scraper
-            ghcr.io/nirajsanghvi/purpleair_scraper
+            nirajsanghvi/purpleair_exporter
+            ghcr.io/nirajsanghvi/purpleair_exporter
           tags: |
             type=semver,pattern={{version}}
 
@@ -38,6 +38,6 @@ jobs:
         with:
           build-args: --progress plain
           push: true
-          tags: ${{ steps.docker_meta.outputs.tags }}, nirajsanghvi/purpleair_scraper
+          tags: ${{ steps.docker_meta.outputs.tags }}, nirajsanghvi/purpleair_exporter
           labels: ${{ steps.docker_meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
