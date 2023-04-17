@@ -1,5 +1,5 @@
 # Purple Air Exporter
-A Prometheus extractor for PurpleAir sensor data using the PurpleAir API. This script queries the PurpleAir API (api.purpleair.com) for public sensor(s) and captures the data as Prometheus metrics. Most other implementations of similar extractors I found for PurpleAir were not very configurable and/or using outdated methods of gathering this data (the old /json endpoint was shut down in 2022, and the map.purpleair.com method which feels like a hack). Additionally, the official API offers an endpoint to query multiple sensors in a single request.
+A Prometheus extractor for PurpleAir sensor data using the PurpleAir API. This script queries the PurpleAir API (api.purpleair.com) for public sensor(s) and captures the data as Prometheus metrics. Most other implementations of similar extractors I found for PurpleAir were not very configurable and/or using outdated methods of gathering this data (the old /json endpoint was shut down in 2022, and the map.purpleair.com method which feels like a hack). Additionally, the official API offers an endpoint to query data from multiple sensors in a single request.
 
 [![Docker Image Version](https://img.shields.io/docker/v/nirajsanghvi/purpleair_exporter?sort=semver)][hub]
 [![Docker Image Size](https://img.shields.io/docker/image-size/nirajsanghvi/purpleair_exporter)][hub]
@@ -15,7 +15,7 @@ The following fields are mapped directly from the API response (with each field 
 - `pressure` -> `purpleair_pressure`
 - `humidity` -> `purpleair_humidity`
 
-Additionally, the AQI is computed for PM2.5 (both from the instant value and the 10-minute average) using this US EPA formula to roughly match what is shown on the PurpleAir map (for some reason the API does not provide this calculation in its response): https://community.purpleair.com/t/how-to-calculate-the-us-epa-pm2-5-aqi/877. The AQI values also are computed using the AQandU conversion as well, and you can use the `conversion` label as a filter depending on whether you want to use that (`conversion="AQandU"`) or not (`conversion="None"`)
+Additionally, the AQI is computed for PM2.5 (both from the instant value and the 10-minute average) using this US EPA formula to roughly match what is shown on the PurpleAir map (for whatever reason, the API does not provide this calculation in its response): https://community.purpleair.com/t/how-to-calculate-the-us-epa-pm2-5-aqi/877. The AQI values also are computed using the AQandU conversion as well, and you can use the `conversion` label as a filter depending on whether you want to use that (`conversion="AQandU"`) or not (`conversion="None"`)
 - `purpleair_aqi_pm2_5`
 - `purpleair_aqi_pm2_5_10_minute`
 - `purpleair_aqi_pm10_0`
