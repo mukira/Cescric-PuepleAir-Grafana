@@ -60,12 +60,12 @@ def main() -> None:
         logger.error(f"Missing env var: PAS_SENSOR_IDS")
         sys.exit(1)
 
-    api_token = os.environ.get("PAS_API_TOKEN", "")
-    if api_token == "":
-        logger.error("Missing env var: PAS_API_TOKEN")
+    api_key = os.environ.get("PAS_API_READ_KEY", "")
+    if api_key == "":
+        logger.error("Missing env var: PAS_API_READ_KEY")
         sys.exit(1)
 
-    validate_api_token(api_token)
+    validate_api_key(api_key)
 
     sensor_ids = os.environ["PAS_SENSOR_IDS"].replace(" ", "")
 
@@ -75,12 +75,12 @@ def main() -> None:
     start_http_server(int(prom_port))
 
     for _ in Ticker(run_interval_s).run():
-        collect_metrics(sensor_ids, api_token)
+        collect_metrics(sensor_ids, api_key)
 
 
-def collect_metrics(sensor_ids, api_token) -> None:
+def collect_metrics(sensor_ids, api_key) -> None:
     logger.info(f"Collecting metrics for sensors: {sensor_ids}")
-    api_data = api_get_sensors(sensor_ids, api_token)
+    api_data = api_get_sensors(sensor_ids, api_key)
     if api_data:
         fields = api_data["fields"]
         sensors_data = api_data["data"]
@@ -96,9 +96,9 @@ def parse_sensor_data(sensor_data, fields):
     return parsed_data
 
 
-def api_get_sensors(sensor_ids, api_token):
+def api_get_sensors(sensor_ids, api_key):
     url = f"{V1_API_ENDPOINT}/sensors"
-    headers = {"X-API-Key": api_token}
+    headers = {"X-API-Key": api_key}
     params = {
         "fields": ",".join(API_SENSOR_FIELDS),
         "show_only": sensor_ids
@@ -178,16 +178,16 @@ def transform_sensor_data(data):
         Aqi10.labels(sensor_id = sensor_id, label = sensor_label, conversion="AQandU").set(aqi)
 
 
-def validate_api_token(api_token: str) -> None:
-    logger.info("Validating API token")
+def validate_api_key(api_key: str) -> None:
+    logger.info("Validating API read key")
     url = f"{V1_API_ENDPOINT}/keys"
-    headers = {"X-API-Key": api_token}
+    headers = {"X-API-Key": api_key}
 
     response = requests.get(url, headers=headers)
 
     # For some reason the API returns 201 instead of 200 on a key check, so just look for both status codes to indicate success
     if response.status_code != 200 and response.status_code != 201:
-        logger.error(f"Invalid API token: {api_token}. \
+        logger.error(f"Invalid API key: {api_key}. \
                      Make sure you are providing a read key generated from https://develop.purpleair.com/keys")
         sys.exit(1)
     
@@ -199,7 +199,7 @@ def validate_api_token(api_token: str) -> None:
 
     key_type = response_json["api_key_type"]
     if key_type != "READ":
-        logger.error(f"The given API key: {api_token} was not a read key, it was a {key_type} key. \
+        logger.error(f"The given API key: {api_key} was not a read key, it was a {key_type} key. \
                      Make sure you are providing a read key generated from https://develop.purpleair.com/keys")
         sys.exit(1)
 
