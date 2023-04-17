@@ -20,7 +20,7 @@ jobs:
       env:
         PAE_SENSOR_IDS: ${{ secrets.PAE_SENSOR_IDS }}
         PAE_API_READ_KEY: ${{ secrets.PAE_API_READ_KEY }}
-      run: docker build . --file Dockerfile --t purpleair_exporter:$(date +%s)
+      run: docker build . --file Dockerfile -t purpleair_exporter:$(date +%s)
       
     - uses: docker/build-push-action@v4.0.0
       with:
