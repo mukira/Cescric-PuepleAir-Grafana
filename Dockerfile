@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 LABEL maintainer="Niraj Sanghvi <niraj.sanghvi@gmail.com>"
 
