@@ -29,6 +29,12 @@ A comma-separated list of sensor IDs to collect data from. Sensor IDs for public
 ### `PAE_API_READ_KEY` (required)
 As a relatively new option, you can visit https://develop.purpleair.com/keys to generate API keys. This script only requires the READ key, not the WRITE one since it is only reading sensor data. Note: That website only offers a Google login option, so if you don't want to do that you might have luck trying the older method of simply sending an email to contact@purpleair.com with your first name, last name, and email address to assign them to.
 
+### `PAE_RUN_INTERVAL_S` (optional)
+The default setting is for the PurpleAir API to be called to update metrics every 120 seconds. This is inline with the [API usage guidelines](https://community.purpleair.com/t/api-use-guidelines/1589):
+>PurpleAir sensors report data every two minutes. This means that it may not be necessary to query data faster than every minute with the real-time API.
+
+The main intent of making this configurable was to be able to ping the API less frequently if your Prometheus job does not need data that frequently.
+
 ### `PAE_LOGGING` (optional)
 Log level of the script, defaults to 'info', accepts any [Python logging level name](https://docs.python.org/3/howto/logging.html#logging-levels)
 
