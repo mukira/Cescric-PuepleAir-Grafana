@@ -43,6 +43,8 @@ The port to run the Prometheus HTTP server on, defaults to 9101
 
 ## Docker CLI
 
+Find this on [Docker Hub](https://hub.docker.com/r/nirajsanghvi/purpleair_exporter)
+
 ```
 docker run -d \
   --name=purpleair_exporter \
