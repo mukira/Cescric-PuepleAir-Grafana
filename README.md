@@ -63,3 +63,10 @@ services:
       - 9101:9101
     restart: on-failure:5
 ```
+
+LICENSE
+======
+
+MIT. See `LICENSE.txt`.
+
+    Copyright (c) 2023 Niraj Sanghvi
