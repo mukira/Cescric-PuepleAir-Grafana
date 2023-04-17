@@ -1,6 +1,11 @@
 # Purple Air Exporter
 A Prometheus extractor for PurpleAir sensor data using the PurpleAir API. This script queries the PurpleAir API (api.purpleair.com) for public sensor(s) and captures the data as Prometheus metrics. Most other implementations of similar extractors I found were using outdated methods of gathering this data (the old /json endpoint was shut down in 2022, and the map.purpleair.com method feels like a hack. Additionally, the official API offers an endpoint to query multiple sensors in a single request.
 
+[![Docker Image Version](https://img.shields.io/docker/v/nirajsanghvi/purpleair_exporter?sort=semver)][hub]
+[![Docker Image Size](https://img.shields.io/docker/image-size/nirajsanghvi/purpleair_exporter)][hub]
+
+[hub]: https://hub.docker.com/r/nirajsanghvi/purpleair_exporter/
+
 The following fields are mapped directly from the API response:
 - `name`
 - `last_seen`
