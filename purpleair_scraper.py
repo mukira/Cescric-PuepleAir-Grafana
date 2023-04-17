@@ -4,7 +4,6 @@ import sys
 import time
 import requests
 from typing import Iterator
-from argparse import ArgumentParser
 from prometheus_client import Counter, Gauge, start_http_server
 
 DEFAULT_RUN_INTERVAL_SECONDS = 120
