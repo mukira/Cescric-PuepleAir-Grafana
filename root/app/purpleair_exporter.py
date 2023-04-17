@@ -11,7 +11,7 @@ V1_API_ENDPOINT = "https://api.purpleair.com/v1"
 API_SENSOR_FIELDS = ["name","last_seen","pm2.5","pm2.5_10minute","pm10.0","temperature","pressure","humidity"]
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
-logger = logging.getLogger("purpleair_scraper")
+logger = logging.getLogger("purpleair_exporter")
 
 # Stats
 STAT_PREFIX = "purpleair_"
@@ -47,27 +47,27 @@ SENSOR_MAP = {
 
 
 def main() -> None:
-    log_level = os.environ.get("PAS_LOGGING", "info")
-    prom_port = int(os.environ.get("PAS_PROM_PORT", "9101"))
+    log_level = os.environ.get("PAE_LOGGING", "info")
+    prom_port = int(os.environ.get("PAE_PROM_PORT", "9101"))
 
     try:
-        run_interval_s = int(os.environ.get("PAS_RUN_INTERVAL_S", DEFAULT_RUN_INTERVAL_SECONDS))
+        run_interval_s = int(os.environ.get("PAE_RUN_INTERVAL_S", DEFAULT_RUN_INTERVAL_SECONDS))
     except ValueError:
-        logger.error(f"Invalid env var: PAS_RUN_INTERVAL_S must be an integer")
+        logger.error(f"Invalid env var: PAE_RUN_INTERVAL_S must be an integer")
         sys.exit(1)
 
-    if "PAS_SENSOR_IDS" not in os.environ or not os.environ["PAS_SENSOR_IDS"]:
-        logger.error(f"Missing env var: PAS_SENSOR_IDS")
+    if "PAE_SENSOR_IDS" not in os.environ or not os.environ["PAE_SENSOR_IDS"]:
+        logger.error(f"Missing env var: PAE_SENSOR_IDS")
         sys.exit(1)
 
-    api_key = os.environ.get("PAS_API_READ_KEY", "")
+    api_key = os.environ.get("PAE_API_READ_KEY", "")
     if api_key == "":
-        logger.error("Missing env var: PAS_API_READ_KEY")
+        logger.error("Missing env var: PAE_API_READ_KEY")
         sys.exit(1)
 
     validate_api_key(api_key)
 
-    sensor_ids = os.environ["PAS_SENSOR_IDS"].replace(" ", "")
+    sensor_ids = os.environ["PAE_SENSOR_IDS"].replace(" ", "")
 
     log_level = getattr(logging, log_level.upper())
     logger.setLevel(log_level)
