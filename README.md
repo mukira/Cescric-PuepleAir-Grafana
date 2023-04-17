@@ -82,4 +82,5 @@ MIT. See `LICENSE.txt`.
 
     Copyright (c) 2023 Niraj Sanghvi
     
-
+## Credits
+This project was heavily influenced by the structure of Nick Pegg's [purple_air_scraper](https://github.com/nickpegg/purple_air_scraper), as well as multiple PurpleAir forum posts (cited as comments in the script).
