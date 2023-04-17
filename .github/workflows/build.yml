@@ -1,0 +1,28 @@
+name: build
+
+on:
+  pull_request:
+  push:
+    branches:
+      - '**'
+      - '!main'
+    tags-ignore:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: docker/setup-buildx-action@v2.5.0
+    - name: Build the Docker image
+      env:
+        PAS_SENSOR_IDS: ${{ secrets.PAS_SENSOR_IDS }}
+        PAS_API_READ_KEY: ${{ secrets.PAS_API_READ_KEY }}
+      run: docker build . --file Dockerfile --tag purpleair_scraper:$(date +%s)
+      
+    - uses: docker/build-push-action@v4.0.0
+      with:
+        build-args: --progress plain
+        platforms: linux/amd64,linux/arm64
