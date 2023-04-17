@@ -64,8 +64,13 @@ services:
     restart: on-failure:5
 ```
 
-LICENSE
-======
+## Grafana Dashboard
+A sample Grafana dashboard (pictured below) is included in this repository: https://github.com/nirajsanghvi/purpleair_exporter/blob/main/grafana_sample.json
+
+![purpleair_extractor_grafana](https://user-images.githubusercontent.com/4184922/232413977-5a489add-e546-4c26-ba1b-9cdafa80b8c8.png)
+
+
+## LICENSE
 
 MIT. See `LICENSE.txt`.
 
