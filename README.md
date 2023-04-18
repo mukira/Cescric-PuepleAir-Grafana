@@ -80,7 +80,7 @@ A sample Grafana dashboard (pictured below) is included in this repository: http
 
 ## LICENSE
 
-MIT. See `LICENSE.txt`.
+MIT. See `LICENSE`.
 
     Copyright (c) 2023 Niraj Sanghvi
     
