@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  purpleair-exporter:
+    image: nirajsanghvi/purpleair_exporter:latest
+    container_name: purpleair_exporter
+    hostname: purpleair_exporter
+    environment:
+      - 'PAE_SENSOR_IDS=161201,143764,179665,143758'
+      - 'PAE_API_READ_KEY=944EFFF0-54CF-11EF-95CB-42010A80000E'
+    ports:
+      - 9101:9101
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:9.4.0
+    container_name: grafana
+    hostname: grafana
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin  # Change this to a secure password
+    volumes:
+      - grafana-data:/var/lib/grafana
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    hostname: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - prometheus-data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+
+volumes:
+  grafana-data:
+  prometheus-data:
